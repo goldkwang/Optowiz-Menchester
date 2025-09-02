@@ -1,0 +1,203 @@
+/*******************************************************************************
+* Copyright (C) 2018 Maxim Integrated Products, Inc., All Rights Reserved.
+*
+* Permission is hereby granted, free of charge, to any person obtaining a
+* copy of this software and associated documentation files (the "Software"),
+* to deal in the Software without restriction, including without limitation
+* the rights to use, copy, modify, merge, publish, distribute, sublicense,
+* and/or sell copies of the Software, and to permit persons to whom the
+* Software is furnished to do so, subject to the following conditions:
+*
+* The above copyright notice and this permission notice shall be included
+* in all copies or substantial portions of the Software.
+*
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+* OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+* IN NO EVENT SHALL MAXIM INTEGRATED BE LIABLE FOR ANY CLAIM, DAMAGES
+* OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+* ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+* OTHER DEALINGS IN THE SOFTWARE.
+*
+* Except as contained in this notice, the name of Maxim Integrated
+* Products, Inc. shall not be used except as stated in the Maxim Integrated
+* Products, Inc. Branding Policy.
+*
+* The mere transfer of this software does not imply any licenses
+* of trade secrets, proprietary technology, copyrights, patents,
+* trademarks, maskwork rights, or any other form of intellectual
+* property whatsoever. Maxim Integrated Products, Inc. retains all
+* ownership rights.
+*******************************************************************************
+*/
+        MODULE  __INTERRUPTS
+        RSEG    RCODE:CODE:NOROOT
+        PUBLIC  ?isr
+        EXTERN  ?init_isr
+        REQUIRE ?init_isr
+        EXTERN  ?UNHANDLED_INTERRUPT
+        REQUIRE	?UNHANDLED_INTERRUPT
+
+// interrupt entry point
+
+#define GP_REG1   M1[22]                                                        //This is scratch register
+
+?isr:   
+        MOVE    @--DP[1],DPC                //save pointer status
+        MOVE    @--DP[1],PSF                //save processor status
+        MOVE    @--DP[1],APC                //save APC
+        MOVE    APC,#0
+        ENDMOD  
+               
+//Module 2: I2C Slave Interface is the highest priority
+        MODULE  ?INTERRUPT2
+        RSEG    RCODE:CODE:NOROOT
+        PUBLIC  ?INTERRUPT2
+        EXTERN  ?ISR2
+        EXTERN  ?isr
+        REQUIRE ?isr
+?INTERRUPT2:
+        MOVE    C,IIR.2       // check for module interrupt
+        SJUMP   NC,?no_INTERRUPT2
+        LJUMP   ?ISR2
+?no_INTERRUPT2:
+        ENDMOD
+
+          
+//Module 0 Interrupts
+        MODULE  ?INTERRUPT0
+        RSEG    RCODE:CODE:NOROOT
+        PUBLIC  ?INTERRUPT0
+        EXTERN  ?ISR0
+        EXTERN  ?isr
+        REQUIRE ?isr
+?INTERRUPT0:
+        MOVE    C, IIR.0                    //check for module interrupt flag
+        SJUMP   NC,?no_INTERRUPT0           //jump if no module interrupt flag
+        MOVE    C,IMR.0                     //check for module interupt mask
+        SJUMP   NC,?no_INTERRUPT0           //jump if this module is masked
+        MOVE    GP_REG1, IMR                //save IMR register 
+        MOVE    IMR,  #4h                   //Allow I2C Slave interrupt only (module 2)
+        MOVE    IC.1, #0                    //clear the INS bit
+        LJUMP   ?ISR0                       //jump to C code ISR
+?no_INTERRUPT0:
+        ENDMOD
+        
+//Module 1 Interrupts
+        MODULE  ?INTERRUPT1
+        RSEG    RCODE:CODE:NOROOT
+        PUBLIC  ?INTERRUPT1
+        EXTERN  ?ISR1
+        EXTERN  ?isr
+        REQUIRE ?isr
+?INTERRUPT1:
+        MOVE    C, IIR.1                    //check for module interrupt flag
+        SJUMP   NC,?no_INTERRUPT1           //jump if no module interrupt flag
+        MOVE    C,IMR.1                     //check for module interupt mask
+        SJUMP   NC,?no_INTERRUPT1           //jump if this module is masked
+        MOVE    GP_REG1, IMR                //save IMR register 
+        MOVE    IMR,  #4h                   //Allow I2C Slave interrupt only (module 2)
+        MOVE    IC.1, #0                    //clear the INS bit
+        LJUMP   ?ISR1                       //jump to C code ISR
+?no_INTERRUPT1:
+        ENDMOD
+                
+
+//Module 3 Interrupts
+        MODULE  ?INTERRUPT3
+        RSEG    RCODE:CODE:NOROOT
+        PUBLIC  ?INTERRUPT3
+        EXTERN  ?ISR3
+        EXTERN  ?isr
+        REQUIRE ?isr
+?INTERRUPT3:
+        MOVE    C,IIR.3       // check for module interrupt
+        SJUMP   NC,?no_INTERRUPT3
+        MOVE    C,IMR.3
+        SJUMP   NC,?no_INTERRUPT3
+        MOVE    GP_REG1, IMR                //save IMR register 
+        MOVE    IMR,  #4h                   //Allow I2C Slave interrupt only (module 2)
+        MOVE    IC.1, #0
+        LJUMP   ?ISR3
+?no_INTERRUPT3:
+        ENDMOD
+ 
+
+//Module 4 Interrupts
+        MODULE  ?INTERRUPT4
+        RSEG    RCODE:CODE:NOROOT
+        PUBLIC  ?INTERRUPT4
+        EXTERN  ?ISR4
+        EXTERN  ?isr
+        REQUIRE ?isr
+?INTERRUPT4:
+        MOVE    C,IIR.4       // check for module interrupt
+        SJUMP   NC,?no_INTERRUPT4
+        MOVE    C,IMR.4
+        SJUMP   NC,?no_INTERRUPT4        
+        MOVE    GP_REG1, IMR                //save IMR register 
+        MOVE    IMR,  #4h                   //Allow I2C Slave interrupt only (module 2)
+        MOVE    IC.1, #0
+        LJUMP   ?ISR4
+?no_INTERRUPT4:
+        ENDMOD 
+        
+                
+//Module 5 Interrupts
+        MODULE  ?INTERRUPT5
+        RSEG    RCODE:CODE:NOROOT
+        PUBLIC  ?INTERRUPT5
+        EXTERN  ?ISR5
+        EXTERN  ?isr
+        REQUIRE ?isr
+?INTERRUPT5:
+        MOVE    C,IIR.5       // check for module interrupt
+        SJUMP   NC,?no_INTERRUPT5
+        MOVE    C,IMR.5
+        SJUMP   NC,?no_INTERRUPT5        
+        MOVE    GP_REG1, IMR                //save IMR register 
+        MOVE    IMR,  #4h                   //Allow I2C Slave interrupt only (module 2)
+        MOVE    IC.1, #0
+        LJUMP   ?ISR5
+?no_INTERRUPT5:
+        ENDMOD
+
+
+//Module 7 (System) Interrupts
+        MODULE  ?INTERRUPT7
+        RSEG    RCODE:CODE:NOROOT
+        PUBLIC  ?INTERRUPT7
+        EXTERN  ?ISR7
+        EXTERN  ?isr
+        REQUIRE ?isr
+?INTERRUPT7:
+        MOVE    C,IIR.7       // check for module interrupt
+        SJUMP   NC,?no_INTERRUPT7
+        MOVE    C,IMR.7
+        SJUMP   NC,?no_INTERRUPT7        
+        MOVE    GP_REG1, IMR                //save IMR register 
+        MOVE    IMR,  #4h                   //Allow I2C Slave interrupt only (module 2)
+        MOVE    IC.1, #0
+        LJUMP   ?ISR7
+?no_INTERRUPT7:
+        ENDMOD
+
+
+//------------------------------------------
+// Catch unhandled interrupts.
+//------------------------------------------    
+
+        MODULE  ?INTERRUPT_ERROR
+        RSEG    RCODE:CODE:NOROOT
+        PUBLIC  ?UNHANDLED_INTERRUPT
+?UNHANDLED_INTERRUPT:
+        MOVE    DP[1],DP[1]   // activate DP1 for reading
+        MOVE    APC,@DP[1]++  // restore APC
+        MOVE    PSF,@DP[1]++  // restore PSF
+        MOVE    DPC,@DP[1]++  // restore DPC
+        RETI
+        ENDMOD
+        
+        
+        
+        

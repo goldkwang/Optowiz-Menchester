@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<Workspace>
+  <ConfigDictionary>
+    
+  <CurrentConfigs><Project>SFP_PLUS_3G_ER_V1_DML_APD/Debug</Project></CurrentConfigs></ConfigDictionary>
+  <Desktop>
+    <Static>
+      <Workspace>
+        <ColumnWidths>
+          
+          
+          
+          
+        <Column0>194</Column0><Column1>27</Column1><Column2>27</Column2><Column3>27</Column3></ColumnWidths>
+      </Workspace>
+    <Build><ColumnWidth0>20</ColumnWidth0><ColumnWidth1>1395</ColumnWidth1><ColumnWidth2>372</ColumnWidth2><ColumnWidth3>93</ColumnWidth3></Build><Debug-Log/></Static>
+    <Windows>
+      
+    <Wnd2>
+        <Tabs>
+          <Tab>
+            <Identity>TabID-30225-22624</Identity>
+            <TabName>Workspace</TabName>
+            <Factory>Workspace</Factory>
+            <Session>
+              
+            <NodeDict><ExpandedNode>SFP_PLUS_3G_ER_V1_DML_APD</ExpandedNode><ExpandedNode>SFP_PLUS_3G_ER_V1_DML_APD/APP</ExpandedNode><ExpandedNode>SFP_PLUS_3G_ER_V1_DML_APD/Customized</ExpandedNode></NodeDict></Session>
+          </Tab>
+        </Tabs>
+        
+      <SelectedTab>0</SelectedTab></Wnd2><Wnd3><Tabs><Tab><Identity>TabID-32731-10422</Identity><TabName>Build</TabName><Factory>Build</Factory><Session/></Tab><Tab><Identity>TabID-1553-4095</Identity><TabName>Debug Log</TabName><Factory>Debug-Log</Factory><Session/></Tab></Tabs><SelectedTab>0</SelectedTab></Wnd3></Windows>
+    <Editor>
+      
+      
+      
+      
+    <Pane><Tab><Factory>TextEditor</Factory><Filename>D:\Projects\Coset\Project_SKT_3G_ST_SFP_2021\2. SW\1.FW\SFP_PLUS_3G_ER_V1_DML_APD\source\Application\memory_access.c</Filename><XPos>0</XPos><YPos>482</YPos><SelStart>13393</SelStart><SelEnd>13431</SelEnd></Tab><ActiveTab>0</ActiveTab><Tab><Factory>TextEditor</Factory><Filename>D:\Projects\Coset\Project_SKT_3G_ST_SFP_2021\2. SW\1.FW\SFP_PLUS_3G_ER_V1_DML_APD\source\Application\memory_access.h</Filename><XPos>0</XPos><YPos>47</YPos><SelStart>2957</SelStart><SelEnd>2957</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Projects\Coset\Project_SKT_3G_ST_SFP_2021\2. SW\1.FW\SFP_PLUS_3G_ER_V1_DML_APD\Source\includes.h</Filename><XPos>0</XPos><YPos>65</YPos><SelStart>3116</SelStart><SelEnd>3116</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Projects\Coset\Project_SKT_3G_ST_SFP_2021\2. SW\1.FW\SFP_PLUS_3G_ER_V1_DML_APD\source\Application\initialization.c</Filename><XPos>0</XPos><YPos>57</YPos><SelStart>4247</SelStart><SelEnd>4247</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Projects\Coset\Project_SKT_3G_ST_SFP_2021\2. SW\1.FW\SFP_PLUS_3G_ER_V1_DML_APD\Source\Application\module_config.h</Filename><XPos>0</XPos><YPos>456</YPos><SelStart>13018</SelStart><SelEnd>13018</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Projects\Coset\Project_SKT_3G_ST_SFP_2021\2. SW\1.FW\SFP_PLUS_3G_ER_V1_DML_APD\source\Application\tosa_control.c</Filename><XPos>0</XPos><YPos>3725</YPos><SelStart>124286</SelStart><SelEnd>124286</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Projects\Coset\Project_SKT_3G_ST_SFP_2021\2. SW\1.FW\SFP_PLUS_3G_ER_V1_DML_APD\Source\Application\memory_map.h</Filename><XPos>0</XPos><YPos>63</YPos><SelStart>5692</SelStart><SelEnd>5692</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Projects\Coset\Project_SKT_3G_ST_SFP_2021\2. SW\1.FW\SFP_PLUS_3G_ER_V1_DML_APD\source\Application\board.c</Filename><XPos>0</XPos><YPos>1113</YPos><SelStart>52330</SelStart><SelEnd>52330</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Projects\Coset\Project_SKT_3G_ST_SFP_2021\2. SW\1.FW\SFP_PLUS_3G_ER_V1_DML_APD\source\Application\mcu_convert.c</Filename><XPos>0</XPos><YPos>1279</YPos><SelStart>42643</SelStart><SelEnd>42643</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Projects\Coset\Project_SKT_3G_ST_SFP_2021\2. SW\1.FW\SFP_PLUS_3G_ER_V1_DML_APD\source\Application\state_transition.c</Filename><XPos>0</XPos><YPos>2049</YPos><SelStart>53253</SelStart><SelEnd>53253</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Projects\Coset\Project_SKT_3G_ST_SFP_2021\2. SW\1.FW\SFP_PLUS_3G_ER_V1_DML_APD\source\main.c</Filename><XPos>0</XPos><YPos>60</YPos><SelStart>4115</SelStart><SelEnd>4115</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Projects\Coset\Project_SKT_3G_ST_SFP_2021\2. SW\1.FW\SFP_PLUS_3G_ER_V1_DML_APD\source\Application\memory.h</Filename><XPos>0</XPos><YPos>75</YPos><SelStart>3255</SelStart><SelEnd>3280</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Projects\Coset\Project_SKT_3G_ST_SFP_2021\2. SW\1.FW\SFP_PLUS_3G_ER_V1_DML_APD\source\Customized\i2cslave.c</Filename><XPos>0</XPos><YPos>146</YPos><SelStart>9123</SelStart><SelEnd>9123</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Projects\Coset\Project_SKT_3G_ST_SFP_2021\2. SW\1.FW\SFP_PLUS_3G_ER_V1_DML_APD\source\Application\ddm.c</Filename><XPos>0</XPos><YPos>1052</YPos><SelStart>51002</SelStart><SelEnd>51002</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Projects\Coset\Project_SKT_3G_ST_SFP_2021\2. SW\1.FW\SFP_PLUS_3G_ER_V1_DML_APD\source\Application\monitor.c</Filename><XPos>0</XPos><YPos>89</YPos><SelStart>4079</SelStart><SelEnd>4079</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Projects\Coset\Project_SKT_3G_ST_SFP_2021\2. SW\1.FW\SFP_PLUS_3G_ER_V1_DML_APD\source\Application\i2c_master_gpio.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>388</SelStart><SelEnd>388</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Projects\Coset\Project_SKT_3G_ST_SFP_2021\2. SW\1.FW\SFP_PLUS_3G_ER_V1_DML_APD\source\Application\board.h</Filename><XPos>0</XPos><YPos>312</YPos><SelStart>27766</SelStart><SelEnd>27770</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\Program Files (x86)\IAR Systems\Embedded Workbench 4.6\MAXQ\INC\iods4835.h</Filename><XPos>0</XPos><YPos>1584</YPos><SelStart>46784</SelStart><SelEnd>46784</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Projects\Coset\Project_SKT_3G_ST_SFP_2021\2. SW\1.FW\SFP_PLUS_3G_ER_V1_DML_APD\source\Customized\i2cs_asm.asm</Filename><XPos>0</XPos><YPos>30</YPos><SelStart>2074</SelStart><SelEnd>2074</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Projects\Coset\Project_SKT_3G_ST_SFP_2021\2. SW\1.FW\SFP_PLUS_3G_ER_V1_DML_APD\Source\Drivers\dc_dc.h</Filename><XPos>0</XPos><YPos>2</YPos><SelStart>5142</SelStart><SelEnd>5142</SelEnd></Tab></Pane><ActivePane>0</ActivePane><Sizes><Pane><X>1000000</X><Y>1000000</Y></Pane></Sizes><SplitMode>1</SplitMode></Editor>
+    <Positions>
+      
+      
+      
+      
+      
+    <Top><Row0><Sizes><Toolbar-02661f30><key>iaridepm1</key></Toolbar-02661f30></Sizes></Row0></Top><Left><Row0><Sizes><Wnd2><Rect><Top>-2</Top><Left>-2</Left><Bottom>754</Bottom><Right>268</Right><x>-2</x><y>-2</y><xscreen>200</xscreen><yscreen>200</yscreen><sizeHorzCX>104167</sizeHorzCX><sizeHorzCY>200602</sizeHorzCY><sizeVertCX>140625</sizeVertCX><sizeVertCY>758275</sizeVertCY></Rect></Wnd2></Sizes></Row0></Left><Right><Row0><Sizes/></Row0></Right><Bottom><Row0><Sizes><Wnd3><Rect><Top>-2</Top><Left>-2</Left><Bottom>198</Bottom><Right>1922</Right><x>-2</x><y>-2</y><xscreen>1924</xscreen><yscreen>200</yscreen><sizeHorzCX>1002083</sizeHorzCX><sizeHorzCY>200602</sizeHorzCY><sizeVertCX>104167</sizeVertCX><sizeVertCY>200602</sizeVertCY></Rect></Wnd3></Sizes></Row0></Bottom><Float><Sizes/></Float></Positions>
+  </Desktop>
+</Workspace>
+
+

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<Workspace>
+  <ConfigDictionary>
+    
+  <CurrentConfigs><Project>SFP28_ER_V1_DML_APD/Debug</Project></CurrentConfigs></ConfigDictionary>
+  <Desktop>
+    <Static>
+      <Workspace>
+        <ColumnWidths>
+          
+          
+          
+          
+        <Column0>232</Column0><Column1>27</Column1><Column2>27</Column2><Column3>27</Column3></ColumnWidths>
+      </Workspace>
+    <Build><ColumnWidth0>20</ColumnWidth0><ColumnWidth1>1395</ColumnWidth1><ColumnWidth2>372</ColumnWidth2><ColumnWidth3>93</ColumnWidth3></Build><Debug-Log/></Static>
+    <Windows>
+      
+    <Wnd0>
+        <Tabs>
+          <Tab>
+            <Identity>TabID-31748-32489</Identity>
+            <TabName>Workspace</TabName>
+            <Factory>Workspace</Factory>
+            <Session>
+              
+            <NodeDict><ExpandedNode>SFP28_ER_V1_DML_APD</ExpandedNode><ExpandedNode>SFP28_ER_V1_DML_APD/APP</ExpandedNode><ExpandedNode>SFP28_ER_V1_DML_APD/Customized</ExpandedNode><ExpandedNode>SFP28_ER_V1_DML_APD/MSA</ExpandedNode><ExpandedNode>SFP28_ER_V1_DML_APD/Output</ExpandedNode></NodeDict></Session>
+          </Tab>
+        </Tabs>
+        
+      <SelectedTab>0</SelectedTab></Wnd0><Wnd1><Tabs><Tab><Identity>TabID-2279-6625</Identity><TabName>Build</TabName><Factory>Build</Factory><Session/></Tab><Tab><Identity>TabID-4290-31322</Identity><TabName>Debug Log</TabName><Factory>Debug-Log</Factory><Session/></Tab></Tabs><SelectedTab>0</SelectedTab></Wnd1></Windows>
+    <Editor>
+      
+      
+      
+      
+    <Pane><Tab><Factory>TextEditor</Factory><Filename>D:\Projects\Coset\Project_SKT_SFP28_T_2020\3.SW\FW\SFP28_ER_V1_DML_APD\source\Application\board.c</Filename><XPos>0</XPos><YPos>36</YPos><SelStart>67295</SelStart><SelEnd>67295</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Projects\Coset\Project_SKT_SFP28_T_2020\3.SW\FW\SFP28_ER_V1_DML_APD\source\Customized\i2cslave.c</Filename><XPos>0</XPos><YPos>207</YPos><SelStart>11893</SelStart><SelEnd>11893</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Projects\Coset\Project_SKT_SFP28_T_2020\3.SW\FW\SFP28_ER_V1_DML_APD\source\Application\i2c_master_gpio.c</Filename><XPos>0</XPos><YPos>493</YPos><SelStart>12093</SelStart><SelEnd>12093</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Projects\Coset\Project_SKT_SFP28_T_2020\3.SW\FW\SFP28_ER_V1_DML_APD\source\Application\board.h</Filename><XPos>0</XPos><YPos>108</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Projects\Coset\Project_SKT_SFP28_T_2020\3.SW\FW\SFP28_ER_V1_DML_APD\source\Application\monitor.h</Filename><XPos>0</XPos><YPos>30</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Projects\Coset\Project_SKT_SFP28_T_2020\3.SW\FW\SFP28_ER_V1_DML_APD\source\Application\initialization.h</Filename><XPos>0</XPos><YPos>54</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Projects\Coset\Project_SKT_SFP28_T_2020\3.SW\FW\SFP28_ER_V1_DML_APD\source\Application\MemoryAccess.h</Filename><XPos>0</XPos><YPos>57</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Projects\Coset\Project_SKT_SFP28_T_2020\3.SW\FW\SFP28_ER_V1_DML_APD\source\Application\ddm.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Projects\Coset\Project_SKT_SFP28_T_2020\3.SW\FW\SFP28_ER_V1_DML_APD\source\Application\tosa_control.c</Filename><XPos>0</XPos><YPos>2984</YPos><SelStart>108767</SelStart><SelEnd>108790</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Projects\Coset\Project_SKT_SFP28_T_2020\3.SW\FW\SFP28_ER_V1_DML_APD\source\Customized\lnkds4835.xcl</Filename><XPos>0</XPos><YPos>9</YPos><SelStart>1960</SelStart><SelEnd>1960</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Projects\Coset\Project_SKT_SFP28_T_2020\3.SW\FW\SFP28_ER_V1_DML_APD\source\includes.h</Filename><XPos>0</XPos><YPos>48</YPos><SelStart>2320</SelStart><SelEnd>2343</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Projects\Coset\Project_SKT_SFP28_T_2020\3.SW\FW\SFP28_ER_V1_DML_APD\source\MSA\alarm_warning.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Projects\Coset\Project_SKT_SFP28_T_2020\3.SW\FW\SFP28_ER_V1_DML_APD\source\MSA\alarm_warning.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>14584</SelStart><SelEnd>14584</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Projects\Coset\Project_SKT_SFP28_T_2020\3.SW\FW\SFP28_ER_V1_DML_APD\source\main.c</Filename><XPos>0</XPos><YPos>15</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Projects\Coset\Project_SKT_SFP28_T_2020\3.SW\FW\SFP28_ER_V1_DML_APD\source\Application\initialization.c</Filename><XPos>0</XPos><YPos>66</YPos><SelStart>4250</SelStart><SelEnd>4250</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Projects\Coset\Project_SKT_SFP28_T_2020\3.SW\FW\SFP28_ER_V1_DML_APD\source\Application\mcu_convert.c</Filename><XPos>0</XPos><YPos>1223</YPos><SelStart>41452</SelStart><SelEnd>41452</SelEnd></Tab><ActiveTab>15</ActiveTab><Tab><Factory>TextEditor</Factory><Filename>D:\Projects\Coset\Project_SKT_SFP28_T_2020\3.SW\FW\SFP28_ER_V1_DML_APD\source\Application\memory_map.h</Filename><XPos>0</XPos><YPos>1213</YPos><SelStart>61934</SelStart><SelEnd>61934</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Projects\Coset\Project_SKT_SFP28_T_2020\3.SW\FW\SFP28_ER_V1_DML_APD\Source\Application\module_config.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>11137</SelStart><SelEnd>11137</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Projects\Coset\Project_SKT_SFP28_T_2020\3.SW\FW\SFP28_ER_V1_DML_APD\source\Application\memory_access.c</Filename><XPos>0</XPos><YPos>85</YPos><SelStart>30858</SelStart><SelEnd>30858</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Projects\Coset\Project_SKT_SFP28_T_2020\3.SW\FW\SFP28_ER_V1_DML_APD\Source\Application\memory.h</Filename><XPos>0</XPos><YPos>138</YPos><SelStart>36294</SelStart><SelEnd>36294</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Projects\Coset\Project_SKT_SFP28_T_2020\3.SW\FW\SFP28_ER_V1_DML_APD\source\Application\state_transition.c</Filename><XPos>0</XPos><YPos>2403</YPos><SelStart>59899</SelStart><SelEnd>59899</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Projects\Coset\Project_SKT_SFP28_T_2020\3.SW\FW\SFP28_ER_V1_DML_APD\source\Application\rosa_control.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Projects\Coset\Project_SKT_SFP28_T_2020\3.SW\FW\SFP28_ER_V1_DML_APD\Source\Application\state_transition.h</Filename><XPos>0</XPos><YPos>102</YPos><SelStart>6357</SelStart><SelEnd>6357</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Projects\Coset\Project_SKT_SFP28_T_2020\3.SW\FW\SFP28_ER_V1_DML_APD\source\Application\memory_access.h</Filename><XPos>0</XPos><YPos>24</YPos><SelStart>1971</SelStart><SelEnd>1971</SelEnd></Tab></Pane><ActivePane>0</ActivePane><Sizes><Pane><X>1000000</X><Y>1000000</Y></Pane></Sizes><SplitMode>1</SplitMode></Editor>
+    <Positions>
+      
+      
+      
+      
+      
+    <Top><Row0><Sizes><Toolbar-02682268><key>iaridepm1</key></Toolbar-02682268></Sizes></Row0></Top><Left><Row0><Sizes><Wnd0><Rect><Top>-2</Top><Left>-2</Left><Bottom>750</Bottom><Right>323</Right><x>-2</x><y>-2</y><xscreen>59</xscreen><yscreen>52</yscreen><sizeHorzCX>30729</sizeHorzCX><sizeHorzCY>52156</sizeHorzCY><sizeVertCX>169271</sizeVertCX><sizeVertCY>754263</sizeVertCY></Rect></Wnd0></Sizes></Row0></Left><Right><Row0><Sizes/></Row0></Right><Bottom><Row0><Sizes><Wnd1><Rect><Top>-2</Top><Left>-2</Left><Bottom>202</Bottom><Right>1922</Right><x>-2</x><y>-2</y><xscreen>1924</xscreen><yscreen>204</yscreen><sizeHorzCX>1002083</sizeHorzCX><sizeHorzCY>204614</sizeHorzCY><sizeVertCX>30729</sizeVertCX><sizeVertCY>52156</sizeVertCY></Rect></Wnd1></Sizes></Row0></Bottom><Float><Sizes/></Float></Positions>
+  </Desktop>
+</Workspace>
+
+

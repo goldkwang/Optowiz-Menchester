@@ -1,0 +1,272 @@
+/*******************************************************************************
+* Copyright (C) 2018 Maxim Integrated Products, Inc., All Rights Reserved.
+*
+* Permission is hereby granted, free of charge, to any person obtaining a
+* copy of this software and associated documentation files (the "Software"),
+* to deal in the Software without restriction, including without limitation
+* the rights to use, copy, modify, merge, publish, distribute, sublicense,
+* and/or sell copies of the Software, and to permit persons to whom the
+* Software is furnished to do so, subject to the following conditions:
+*
+* The above copyright notice and this permission notice shall be included
+* in all copies or substantial portions of the Software.
+*
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+* OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+* IN NO EVENT SHALL MAXIM INTEGRATED BE LIABLE FOR ANY CLAIM, DAMAGES
+* OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+* ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+* OTHER DEALINGS IN THE SOFTWARE.
+*
+* Except as contained in this notice, the name of Maxim Integrated
+* Products, Inc. shall not be used except as stated in the Maxim Integrated
+* Products, Inc. Branding Policy.
+*
+* The mere transfer of this software does not imply any licenses
+* of trade secrets, proprietary technology, copyrights, patents,
+* trademarks, maskwork rights, or any other form of intellectual
+* property whatsoever. Maxim Integrated Products, Inc. retains all
+* ownership rights.
+*******************************************************************************
+*/
+
+//------------------------------------------------------------------------------
+//                            - hwmul.s66 -
+//
+//       This module contains hardware multiplier support routines.
+//
+//       Copyright 2005 IAR Systems. All rights reserved.
+//
+//	Entries:
+//
+//         ?SC_MUL_HW
+//         ?UC_MUL_HW
+//         ?SS_MUL_HW
+//         ?US_MUL_HW
+//         ?SL_MUL_HW
+//         ?UL_MUL_HW
+//
+//
+//       $Revision: 1632 $
+//
+//       $Log$
+//       Revision 1.7  2006/03/03 12:42:18  ifrc
+//       Disabled interrupt during multiplier operations
+//
+//       Revision 1.7  2006/03/03 12:42:18Z  ifrc
+//       Disabled interrupt during multiplier operations
+//       Revision 1.6  2006/03/02 14:22:28  fredrikc
+//       Revision 1.5  2006/02/23 14:08:04  ifrc
+//       Support for several modules hwmul
+//       Revision 1.4  2006/02/22 16:55:40  ifrc
+//       Added support for MAXQ765x hw mul.
+//       Revision 1.3  2006/02/03 18:44:47  ifrc
+//       Revision 1.2  2005/05/24 06:56:54Z  ifrc
+//       Updated mutiplier interface to new revision
+//       Revision 1.1  2005/05/20 14:14:19Z  ifrc
+//       Initial revision
+//       2013.07.23 Frank
+//------------------------------------------------------------------------------
+#define TARGET ((__TID__ & 0x7F00) >> 8)
+#if (TARGET != 66)
+#error "Not the AMAXQ IAR Assembler"
+#endif
+
+#ifdef __ICCMAXQ__
+#define MAXQ20 (__CORE__ == __MAXQ20__ || __CORE__==__MAXQ68__)
+#define MAXQ68 (__CORE__ == __MAXQ68__)
+#else
+#define MAXQ20 ((__TID__ & 0x00FF)  == 20 || (__TID__ & 0x00FF)  == 68)
+#define MAXQ68 ((__TID__ & 0x00FF)  == 68)
+#endif
+
+#if MAXQ20
+
+// define the required registers
+#define MCNT    M\1[0]
+#define MA      M\1[1]
+#define MB      M\1[2]
+#define MC2     M\1[3]
+#define MC1     M\1[4]
+#define MC0     M\1[5]
+
+// MCNT control bits
+#define SUS   0x01
+#define MMAC  0x02
+#define MSUB  0x04
+#define OPCS  0x08
+#define SQU   0x10
+#define CLD   0x20
+#define MCW   0x40
+
+        MODULE ?MUL_HW
+
+//------------------------------------------------------------------------------
+//
+//       Function:       char multiplication
+//
+//       Created:        20/May/2005 IFRC
+//
+//       Input registers:        A[1], A[0]
+//       Operation:              A[2] = A[1] * A[0]
+//       Returns with:           A[2] = result
+//       Modified registers:     A[2], AP
+//
+//       Description:    Multiplies two 8 bit signed/unsigned chars.
+//
+//------------------------------------------------------------------------------
+?char_mul MACRO
+        PUBLIC  ?UC_MUL_HWM\1
+        PUBLIC  ?SC_MUL_HWM\1
+?UC_MUL_HWM\1:
+?SC_MUL_HWM\1:
+#if MAXQ68
+        PUSH    IC		; save interrupt status
+#else
+        ;MOVE    @--DP[1],IC	; save interrupt status
+        MOVE    @--DP[1],IMR    ; save IMR ont the SW stack
+#endif
+        ;MOVE    IC.0,#0		; disable interrupts
+        MOVE    IMR,#4
+        
+        MOVE    MCNT, #(SUS+CLD)
+        MOVE    MA, A[0]
+        MOVE    MB, A[1]
+        MOVE    AP, #2
+        MOVE    A[2], MC0
+#if MAXQ68
+        POP     IC
+#else
+        MOVE    DP[1],DP[1]
+        ;MOVE    IC,@DP[1]++	; restore interrupt status
+        MOVE    IMR,@DP[1]++    ; restore interrupt status
+#endif
+        AND     #0xff
+        RET
+        ENDM
+
+        RSEG    CODE:CODE:NOROOT
+        ?char_mul 1 
+        RSEG    CODE:CODE:NOROOT
+        ?char_mul 2
+        RSEG    CODE:CODE:NOROOT
+        ?char_mul 3
+        RSEG    CODE:CODE:NOROOT
+        ?char_mul 5
+        
+//------------------------------------------------------------------------------
+//
+//       Function:       short int multiplication
+//
+//       Created:        20/May/2005 IFRC
+//
+//       Input registers:        A[1], A[0]
+//       Operation:              A[2] = A[1] * A[0]
+//       Returns with:           A[2] = result
+//       Modified registers:     A[2]
+//
+//       Description:    Multiplies two 16 bit signed/unsigned ints.
+//
+//------------------------------------------------------------------------------
+?short_mul MACRO
+        PUBLIC  ?US_MUL_HWM\1
+        PUBLIC  ?SS_MUL_HWM\1
+?US_MUL_HWM\1:
+?SS_MUL_HWM\1:
+#if MAXQ68
+        PUSH    IC
+#else
+        ;MOVE    @--DP[1],IC	; save interrupt status
+        MOVE    @--DP[1],IMR    ; save IMR ont the SW stack
+#endif
+        ;MOVE    IC.0,#0		; disable interrupts
+        MOVE    IMR,#4
+        
+        MOVE    MCNT, #(SUS+CLD)
+        MOVE    MA, A[0]
+        MOVE    MB, A[1]
+        NOP
+        MOVE    A[2], MC0
+#if MAXQ68
+        POP     IC
+#else
+        MOVE    DP[1],DP[1]
+        ;MOVE    IC,@DP[1]++	; restore interrupt status
+        MOVE    IMR,@DP[1]++    ; restore interrupt status
+#endif
+        RET
+        ENDM
+
+        RSEG    CODE:CODE:NOROOT
+        ?short_mul 1
+        RSEG    CODE:CODE:NOROOT
+        ?short_mul 2
+        RSEG    CODE:CODE:NOROOT
+        ?short_mul 3
+        RSEG    CODE:CODE:NOROOT
+        ?short_mul 5
+        
+//------------------------------------------------------------------------------
+//
+//       Function:       long int multiplication
+//
+//       Created:        20/May/2005 IFRC
+//
+//       Input registers:        A[1]:A[0], A[3]:A[2]
+//       Operation:              A[5]:A[4] = A[1]:A[0] * A[3]:A[2]
+//       Returns with:           A[5]:A[4] = result
+//       Modified registers:     A[4], A[5], AP
+//
+//       Description:    Multiplies two 32 bit signed/unsigned long ints.
+//
+//------------------------------------------------------------------------------
+?long_mul MACRO
+        PUBLIC  ?UL_MUL_HWM\1
+        PUBLIC  ?SL_MUL_HWM\1
+?UL_MUL_HWM\1:
+?SL_MUL_HWM\1:
+#if MAXQ68
+        PUSH    IC
+#else
+       ; MOVE    @--DP[1],IC	; save interrupt status
+       MOVE    @--DP[1],IMR    ; save IMR ont the SW stack
+#endif
+        ;MOVE    IC.0,#0		; disable interrupts
+        MOVE    IMR,#4
+        
+        MOVE    MCNT, #(SUS+MMAC+CLD)
+        MOVE    MA, A[1]
+        MOVE    MB, A[2]
+        MOVE    MA, A[0]
+        MOVE    MB, A[3]
+        MOVE    MA, A[0]	; nop
+        MOVE    MC1, MC0
+        MOVE    MC0, #0 
+        MOVE    MB, A[2]
+        NOP
+        MOVE    A[4], MC0
+        MOVE    A[5], MC1
+#if MAXQ68
+        POP     IC
+#else
+        MOVE    DP[1],DP[1]
+        ;MOVE    IC,@DP[1]++	; restore interrupt status
+        MOVE    IMR,@DP[1]++    ; restore interrupt status
+#endif
+        RET
+        ENDM
+
+        RSEG    CODE:CODE:NOROOT
+        ?long_mul 1
+        RSEG    CODE:CODE:NOROOT
+        ?long_mul 2
+        RSEG    CODE:CODE:NOROOT
+        ?long_mul 3
+        RSEG    CODE:CODE:NOROOT
+        ?long_mul 5        
+        ENDMOD
+        
+#endif  // #if MAXQ20
+
+        END

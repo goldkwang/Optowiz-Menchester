@@ -1,0 +1,177 @@
+맨체스터 규격
+- bit rate 500 bits/sec
+- negative edge is binary one
+- 8 bits per transfer
+- most significant bit sent First
+- Tolerance : 25% of Period
+- low->hi - 0, hi->low - 1
+
+1프레임 구성 : SOF - 3Bit Number - 8Bit Data - 8Bit Data - Hamming Code (5bit) - EOF - HoldTime
+- SOF : Low (1ms) - Hi (1ms)
+- EOF : Hi (1ms) - Low (1ms)
+- HoldTime : 10ms ( Low )
+- 9ms ~11ms low 이면 HoldTime 으로 인식
+- 프레임 시작 SOF : 최소 100ms ~ 30초 Low -> Hi ( 1ms )
+- 프레임과 프레임 사이의 EOF + HoldTime + SOF : HI ( 1ms ) -> Low ( 1ms ) -> Low ( 10ms - HoldTime ) -> Low ( 1ms ) -> HI ( 1ms )
+- SOF/EOF 는 단순 펄스로 인식할것, SOF/EOF의 1ms 펄스도 오차 적용함 (0.9ms ~ 1.1ms)
+- Hamming Code 는  3bit + 16bit data 로 생성됨
+- 맨체스터 수신시 에러가 발생해도 복구하지 않음, 단순히 읽기만 함
+- 모든 시간은 정확히 1ms, 10ms 가 될수없으므로 오차를 주어야 함 ( 5% )
+- 16bit 데이터 : 시리얼 출력시 Ascii 문자열로 출력할 것
+- 1프레임이 오류발생시 또는 프레임을 읽는중 오류 발생시 다음 Time Slot 에서부터 읽을것
+
+1Time Slot = 8프레임 ( 8Bit 데이터가 16회 출력됨 - 16글자인식 )
+- 3Bit Number 은 000~111 까지 순서대로 변경됨, 1Time Slot 이 지나면 다시 000 ~ 111 반복
+- Time Slot과 Time Slot 사이의 시간 : 최소 100ms ~ 30초 로 가변됨 - 송신측에서 난수발생시켜서 시간정하므로 수신측에서는 이 시간을 알수없음
+- 100ms 이상 low 이면 Time Slot과 Time Slot 사이의 시간으로 인식
+- 부분 수신: 8프레임 중 일부만 수신된 경우 처리는 무시하고 다음 프레임 기다릴것
+- 프레임 사이의 HoldTime 과 SOF, EOF 가 연결된 구조이므로 SOF, EOF 감지시 주의할것
+- Time Slot과 Time Slot 사이의 시간과 SOF, EOF 가 연결된 구조이므로 SOF, EOF 감지시 주의할것
+
+주기
+- 1 주기 = 8 Time Slot 
+- 전원 켜짐 후 → Time Slot과 Time Slot 사이의 시간인 최소 100ms ~ 30초의 LOW 발생후 읽기 시작
+
+Time Slot 내 프레임간: EOF(1ms) → Low(1ms) → HoldTime(10ms) → SOF(1ms) → Hi(1ms)
+Time Slot간: EOF → 긴 Low(100ms~30s) → SOF
+
+Time Slot 1: [프레임0] → [프레임1] → ... → [프레임7] (16글자)
+             ↓ (긴 Low 100ms~30s)
+Time Slot 2: [프레임0] → [프레임1] → ... → [프레임7] (16글자)
+             ↓
+...8번 반복하면 1주기 완료 (총 128글자)
+
+- 1Time Slot 즉 8프레임 완료시 16글자 문자열 시리얼로 출력할것 - 형식 : 시리얼 출력값 : 16글자 아스키코드
+- 아스키코드는 영문자, 숫자, 기호로 구성됨, 특수문자는 없음
+
+예시 : 각 hi, low 는 1ms 일때
+low - hi - low - hi - low - hi : 000
+hi - low - low - hi - hi - low : 101
+
+
+- ESP32 의 4번핀으로 맨체스터코드 수신을 하고 수신값을 시리얼로 출력할 것
+- 맨체스터 라이브러리 이용한 방법으로 코드 구현
+
+case 0 : low 로 될때까지 대기
+case 1 : low 시간이 500ms 이상이면 -> case 2
+ 500ms 이전에 hi 로 변하면 -> case 0
+case 2: hi 로 변할때까지 대기
+hi 로 변하면 -> case 3
+30초 이상 지났는데 hi 로 변하지 않으면 -> case 0
+
+맨체스터 규격은 알고 있습니다
+통신규격은 500bps 이고
+
+low->hi - 0, hi->low - 1 값으로 읽는다
+펄스의 짧은 시간은 1ms, 긴 시간은 2ms 입니다.
+그러나 0.9ms ~ 1.1ms 의 펄스이면 1ms
+1.8ms ~ 2.2ms 의 펄스이면 2ms 로 간주합니다.
+
+최초 시작은 low edge 발생 -> 최소 100ms 이상 low 유지 -> hi edge 발생이고 이 이후부터 데이터를 읽기 시작합니다.
+25비트의 데이터를 읽어야 합니다.
+25번째의 데이터는 반드시 1 이므로 25번째의 데이터를 읽은후에 펄스는 반드시 low 입니다.
+
+void edgeDetect() 에서 현재 핀상태가 low 이면 이전 핀상태는 hi 이므로 이것은 반드시 low edge 이고
+현재 핀상태가 hi 이면 이전 핀상태는 low 이므로 이것은 반드시 hi edge 이므로 이전 핀상태는 알 필요가 없습니다.
+
+아두이노에서 맨체스터 데이터 25비트를 읽는 코드를 구현합니다.
+입력핀은 3번
+통신속도 115200
+attachInterrupt(digitalPinToInterrupt(RX_PIN), edgeDetect, CHANGE) 를 이용하여 
+
+코드의 가장위에는 #include <Arduino.h> 를 추가
+
+시작 시퀀스 완료:
+low 엣지 발생 -> 최소 100ms 이상 low 유지 -> hi 엣지 발생.
+이 마지막 hi 엣지 발생 시점이 첫 번째 데이터 펄스의 시작점이 됩니다.
+
+첫 번째 비트 판단:
+시작 시퀀스의 hi 엣지인 hi상태 이후 -> 1ms 유지 -> low edge-> low 1ms 유지 ->  hi edge 일때 마지막 hi edge 에서 0이 됩니다.
+시작 시퀀스의 hi 엣지인 hi상태 이후 -> hi 2ms 유지 -> low edge 일때 마지막 low edge 에서 1이 됩니다.
+
+Hi edge 는 he, low edge 는 le 로 Hi 는 h, low 는 l 로 표시합니다. 괄호안의 숫자는 0,1 판단값입니다.
+예제로 01100010 을 설명합니다.
+시작 시퀀스 완료이후 hi 상태 
+H 1ms -> le -> l 1ms -> he(0) -> h 2ms -> le (1) -> l 1ms -> he -> h 1ms -> le(1) 
+  -> l 2ms -> he (0) -> h 1ms -> le -> l 1ms -> he (0) -> h 1ms -> le -> l 1ms -> he (0) 
+  -> h 2ms -> le (1) -> l 2ms -> he (0)
+
+비트 판단은 2ms 마다 한번 해야 합니다.
+예제 : 010001100
+비트 1: h 1ms → le → l 1ms → he(0) → 0
+비트 2: h 2ms → le(1) → 1
+비트 3: l 2ms → he(0) → 0
+비트 4: h 1ms → le → l 1ms → he(0) → 0
+비트 5: h 1ms → le → l 1ms → he(0) → 0
+비트 6: h 2ms → le(1) → 1
+비트 7: l 1ms → he → h 1ms → le(1) → 1
+비트 8: l 2ms → he(0) → 0
+비트 9: h 1ms → le → l 1ms → he(0) → 0
+
+예제 101001100
+비트 1: h 2ms → le(1) → 1
+비트 2: l 2ms → he(0) → 0
+비트 3: h 2ms → le(1) → 1
+비트 4: l 2ms → he(0) → 0
+비트 5: h 1ms → le → l 1ms → he(0) → 0
+비트 6: h 2ms → le(1) → 1
+비트 7: l 1ms → he → h 1ms → le(1) → 1
+비트 8: l 2ms → he(0) → 0
+비트 9: h 1ms → le → l 1ms → he(0) → 0
+
+첫 프레임 출력시 3비트/ 16비트 / 5비트 / 1 인데 
+이것을 각각 값을 넣어서 표시
+즉 3비트 2진수/ 16비트 아스키 문자/ 5비트 2진수 / 1 이런 형식으로 표시
+000/ab/01111/1
+
+이제 2~8 번째 프레임까지 모두 구현합니다.
+첫번째 프레임의 완료 (마지막 1) - low 10ms - hi edge 두번째 프레임 시작
+두번째 프레임의 완료 (마지막 1) - low 10ms - hi edge 세번째 프레임 시작
+... 동일
+7번째 프레임의 완료 (마지막 1) - low 10ms - hi edge - 1주기 완료 (마지막 (1))
+- 최소 50ms low - hi edge (첫번째 프레임의 시작)
+프레임 완료후에는 8프레임의 16비트 데이터를 연결해서 아스키 문자열로 출력
+
+
+3. 시작 3비트가 000~111 까지 순서대로 나와야 합니다.
+4. 마지막은 반드시 1 이어야 합니다.
+5. 5비트의 해밍코드가 맞는지 확인하는 코드를 삽입해야 합니다.
+6. 위의 3,4,5 가 모두 이상없어야 "시리얼 출력값: XC213441A004" 을 출력합니다.
+문제있으면 "시리얼 출력오류" 라고 표시
+
+- 구현해야할 동작
+1. 1Time Slot 과 1Time Slot 사이의 시간을 현재 고정되어 있는것을 1초 ~ 30초 사이의 임의의 시간으로 변경, 
+
+2. PLACNT 기능제어
+@barod.c 의 void PLA_Init(void) 을 보면 
+  // PLACNT1_bit.REG_SEL = 0;
+  // PLADAT1 = 0x0010; // PIS[4] = 1, GP24 Input, active high
+  // PLACNT1 = 0x80C0; // PLAEN, OUT GP00, SBEN2, SBEN1, REG_SEL(PIS)
+  이 주석처리된 부분이 원래는 The DS4835/36 provides 4 hardware Programmable Logic Arrays (PLA) 를 이용하여 
+  GP24 입력을 GP00 으로 출력하는 코드입니다.
+  
+  맨체스터 출력이 동작하는 시점은 GP07 입력이 HI 가 되면 동작해야 합니다.
+  맨체스터 출력이 동작하기 위해서는 위의 PLA 기능이 정지되어야 합니다.
+  현재 main.c 코드는 CPU의 GP00 출력과 연결된 드라이버 IC(GN1157)의 TXDIS 핀을 ON/OFF 해서 광출력을 ON/OFF 하는 방식으로 맨체스터 출력을 만들고 있으므로
+  즉 GP07 입력 LOW 이면 맨체스터 출력없고 PLA GP07 - GP00 연결됨
+  GP07 입력 HI 이면 맨체스터 출력있고 PLA GP07 - GP00 연결 끊기
+  현재 코드는 테스트를 위해 PLA 기능을 주석처리해서 사용하지 않도록 했음
+
+3. main문이 시작되면 타이머에 의해 즉시 맨체스터 출력이 시작되는데 
+  이것을 I2C 통신을 통해 출력이 시작되는 시간을 조절할것, 
+  윈도우 UI에서 I2C 명령을 보내고 1분, 5분, 해제 모드 (맨체스터 출력없음)의 3가지가 있음.
+  펌웨어에서 기본동작은 5분 이고 윈도우 UI 에서 테스트용으로 명령을 보낼때만 모드가 변경됨
+  CPU 의 전원이 리셋되면 다시 5분 모드로 동작해야 함
+  윈도우 UI 에서 I2C 로 MCU 에 명령을 보낼때는 MCU 의 메모리중 
+   A2_PAGE_81H_MEMORY_MAP; 에 안쓰는 번지에 값을 써서 1분, 5분, 해제 모드 를 구별할것
+  위의 2번 내용과 같이 맨체스터 출력은 GP07 입력이 HI가 되면 동작해야 함
+  
+
+
+  PLACNT1 의 GP24 IN, GP00 OUT 기능을  제거했고 GP24는 입력, GP00은 출력의 기능으로 사용하도록 수정했음. 
+  이것이 다음 동작에 맞게 설정된 것인지 확인할것. 
+  1) PLACNT2_bit.PLA_OUT 기능은 GP07 입력을 PG22 출력으로 내보내는 PLANCT 기능인데 이것은 LOS 신호입니다. 
+  2) LOS 신호가 LOW 이면 GP24 입력값이 GP00 으로 출력됩니다. 
+  3) LOS 가 20ms 이상 HI 이면 GP24 입력은 무시후 GP00 을 제어해서 맨체스터 출력신호를 내보냅니다.
+
+  랜덤출력 1초 30초 구현

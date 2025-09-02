@@ -1,0 +1,115 @@
+/***********************************************************************
+ *                      -LNKDS4835.XCL-
+ *
+ *      XLINK command file to be used with the MAXQ C-compiler.
+ *
+ *      Usage:  xlink  your_file(s)  -f lnkDS4835
+ *
+ *      Copyright 2016-2017 IAR Systems. All Rights Reserved.
+ *
+ *      Device DS4835 by Dallas/Maxim-ic
+ *
+ *      $Revision: 1676 $
+ *
+ *      15-Jul-2016 - SKJ - Initial Version
+ *
+ ************************************************************************/
+
+/*        Define CPU.           */
+
+-cmaxq
+
+/************************************************************************
+ *      Specify stack and heap segment sizes
+ *
+ *      They occupy the same address area, and grows in different
+ *      directions. Uncomment for command line use.
+ *
+ ************************************************************************/
+/* -D_CSTACK_SIZE=1E0 */
+/* -D_HEAP_SIZE=200 */
+
+
+/************************************************************************
+ *      Allocate reset vector area segment which is mapped to ROM.
+ *
+ *      This segment contains CSTARTUP, interrupt vectors and such.
+ *
+ ************************************************************************/
+-Z(CODE)RESET=0-1F
+-Z(CODE)RCODE=20-11F
+
+//-Z(CODE)RCODE=0-0FF
+
+
+/************************************************************************
+ *      Make constant data occupy space in both CODE and DATA segments.
+ *
+ *      In the DATA segment, they occupy addresses above 8000. They
+ *      are accessible from the utility ROM. Pretend the constant data
+ *      is located in the data segment to get correct addresses for 
+ *      labels.
+ *
+ ************************************************************************/
+/*-U(CODE)0-7FFF=(DATA)8000-FFFF*/
+-Z(DATA)DATA16_C,DATA8_ID,DATA16_ID,CHECKSUM,CONST=8120-87E0
+-Z(CODE)CDATA16_C,CDATA16_ID,CDATA8_ID,CCHECKSUM,CCONST=120-7E0
+-QDATA16_C=CDATA16_C
+-QDATA16_ID=CDATA16_ID
+-QDATA8_ID=CDATA8_ID
+-QCHECKSUM=CCHECKSUM
+-QCONST=CCONST
+
+
+/************************************************************************
+ *      Allocate main code segment. 
+ *
+ *      Segment parts may be rearranged.
+ *
+ ************************************************************************/
+-P(CODE)CODE=0-FFFF
+-P(CODE)FARCODE=10000-1FFFF
+-P(CODE)LCODE=0-1FFFF
+
+
+/************************************************************************
+ *      Allocate data segments. 
+ *
+ *      The stack grows toward low addresses from the top of the STACK
+ *      segment. The heap grows towards high addresses and starts in the
+ *      bottom of the HEAP segment. They occupy the same memory area.
+ *
+ *      The data segments begin at address 2 because in C, address 0
+ *      is reserved for null pointers. If you must use address 0, locate
+ *      a small simple variable there instead of changing this link
+ *      script. Also, the compiler relies on not accidentally flowing under
+ *      zero when auto decrementing.
+ *
+ ************************************************************************/
+-Z(DATA)DATA8_I,DATA8_Z,DATA8_N=2-FF		/* Bytes - For Small Data Model*/
+-Z(DATA)DATA16_I,DATA16_Z,DATA16_N=2-FE0	/* Bytes - For Large Data Model*/
+-Z(DATA)CSTACK+_CSTACK_SIZE#400-FE0		/* 32 Bytes left at the top for the debugger*/
+-Z(DATA)HEAP+_HEAP_SIZE=400-FE0			/* For Small Data Model*/
+
+
+/************************************************************************
+ *      Define utility ROM labels. 
+ *
+ ************************************************************************/
+
+/*This is the ROM code mapping for the DS4835 device. */
+/*Byte Address mentioned here */
+
+-D?UTIL_MOVE_DP0=10976
+-D?UTIL_MOVE_DP0_INC=1097C
+-D?UTIL_MOVE_DP0_DEC=10982
+-D?UTIL_MOVE_DP1=10988
+-D?UTIL_MOVE_DP1_INC=1098E
+-D?UTIL_MOVE_DP1_DEC=10994
+-D?UTIL_MOVE_FP=1099A	
+-D?UTIL_MOVE_FP_INC=109A0
+-D?UTIL_MOVE_FP_DEC=109A6
+
+/************************************************************************/
+/*      End of File                                                     */
+/************************************************************************/
