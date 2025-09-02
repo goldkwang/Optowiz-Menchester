@@ -119,7 +119,7 @@ extern void Manchester_Control_I2C(unsigned char command);
 #define FW_VER_0 '0'
 #define FW_VER_1 '2'
 #define FW_VER_2 '.'
-#define FW_VER_3 '4'
+#define FW_VER_3 '5'
 
 //-----------------------------------------------------------------------------
 // defines

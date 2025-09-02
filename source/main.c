@@ -84,7 +84,6 @@ typedef struct
 
 static ManchesterData manData;
 
-// 함수 프로토타입 선언
 void Out_HI(void);
 void Out_LO(void);
 
@@ -232,7 +231,7 @@ __interrupt void module3_int()
 		{
 		case 0: // delay 시작 및 데이터 배열에 넣기
 		{
-			Out_HI();
+			Out_LO();
 
 			// 이전 값을 prev 버퍼에 저장하고, 새 값을 읽으면서 동시에 비교
 			vendorPN_changed = 0;
@@ -266,7 +265,7 @@ __interrupt void module3_int()
 		case 6:
 		case 7:
 		case 8: // 8프레임의 데이터 구성
-			Out_HI();
+			Out_LO();
 			// vendorPN이 변경되었을 때만 데이터 업데이트
 			if (manData.currentFrame == 0 && vendorPN_changed == 1)
 			{
@@ -281,7 +280,7 @@ __interrupt void module3_int()
 			break;
 
 		case 9: // Delay 10ms 시간 맞추기 위해 삽입
-			Out_HI();
+			Out_LO();
 			main_Cnt++;
 			break;
 
@@ -351,7 +350,8 @@ __interrupt void module3_int()
 			break;
 
 		case 39:
-			Out_HI(); // 프레임 간 대기 중에는 HIGH 유지
+			// Out_LO();
+			Out_HI();
 
 			// time_Chk 감소 및 상태 전환
 			if (time_Chk > 0)
